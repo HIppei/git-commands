@@ -16,6 +16,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+      - name: Check if branch exists
+        run: |
+          if git ls-remote --exit-code --heads origin release/branch; then
+            echo "Branch already exists. Exiting workflow."
+            exit 0
+          fi
       - name: Create diff to main
         run: |
           git switch -c release/branch
