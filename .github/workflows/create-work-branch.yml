@@ -19,7 +19,6 @@ jobs:
       - name: Create diff to main
         run: |
           git switch -c release/branch
-          git merge main -m "Merge branch 'main' into release/branch"
           git commit --allow-empty -m "Create PR"
           git push origin release/branch
       - name: Create PR
