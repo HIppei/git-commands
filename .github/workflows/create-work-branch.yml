@@ -1,0 +1,29 @@
+name: Create Work Branch Test
+
+on:
+  push:
+    branches:
+      - feature/new-branch
+
+jobs:
+  create-work-branch-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setting up Git
+        run: |
+          git config --global user.name ${{ github.actor }}
+          git config --global user.email ${{ github.actor }}@users.noreply.github.com
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Create diff to main
+        run: |
+          git switch -c release/branch
+          git merge main -m "Merge branch 'main' into release/branch"
+          git commit --allow-empty -m "Create PR"
+          git push origin release/branch
+      - name: Create PR
+        run: |
+          gh pr create --base main --head release/branch --title "Test Title" --body "" --label "Test" --draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
