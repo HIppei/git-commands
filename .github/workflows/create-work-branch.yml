@@ -20,7 +20,7 @@ jobs:
         run: |
           if git ls-remote --exit-code --heads origin release/branch; then
             echo "Branch already exists. Exiting workflow."
-            exit 0
+            exit 1
           fi
       - name: Create diff to main
         run: |
