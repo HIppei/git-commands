@@ -3,7 +3,7 @@ name: Create Work Branch Test
 on:
   push:
     branches:
-      - feature/new-branch
+      - test/new-branch
 
 jobs:
   create-work-branch-auth:
